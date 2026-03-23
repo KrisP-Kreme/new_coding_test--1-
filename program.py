@@ -1,12 +1,21 @@
 import json
 from player import Player
+from space import Space
 
 board_size = 9
 starting_balance = 16
 starting_position = 0
 
 with open('board.json', 'r') as file:
-    board = json.load(file)
+    board = [
+        Space(
+            space['name'],
+            space.get('price'),
+            space.get('rent'),
+            space['type']
+        )
+        for space in json.load(file)
+    ]
 
 with open('rolls_1.json', 'r') as file:
     rolls_1 = json.load(file)
@@ -26,10 +35,28 @@ for roll in rolls_1:
     curr_player = players[curr_index]
     space = curr_player.move(roll, board_size)
 
-    if board[space]['name'] == "GO":
+    print(f"{curr_player.name} rolled {roll} and landed on {board[space].name} and has a balance of {curr_player.balance}")
+
+    if board[space].name == "GO":
         curr_player.balance += 1
 
-    print(f"{curr_player.name} rolled {roll} and landed on {board[space]['name']} and has a balance of {curr_player.balance}")
+    if board[space].type == "property":
+        if board[space].owner is None:
+            if curr_player.balance >= board[space].price:
+                curr_player.balance -= board[space].price
+                board[space].owner = curr_player.name
+                print(f"{curr_player.name} bought {board[space].name} for {board[space].price} and has a balance of {curr_player.balance}")
+            elif board[space].owner != curr_player.name:
+                curr_player.balance -= board[space].rent
+                for player in players:
+                    if player.name == board[space].owner:
+                        player.balance += board[space].rent
+                print(f"{curr_player.name} paid {board[space].rent} rent to {board[space].owner} and has a balance of {curr_player.balance}")
+            elif board[space].owner == curr_player.name:
+                print(f"{curr_player.name} landed on their own property {board[space].name} and has a balance of {curr_player.balance}")
+            else:
+                print(f"{curr_player.name} cannot afford {board[space].name} and has a balance of {curr_player.balance}")
+                
 
     curr_index = (curr_index + 1) % len(players)
 
