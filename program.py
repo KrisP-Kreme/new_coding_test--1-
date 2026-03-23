@@ -20,7 +20,7 @@ Player4 = Player("Sweedal", starting_balance, starting_position)
 curr_player = Player1
 
 for roll in rolls_1:
-    space = curr_player.move(rolls_1[roll], board_size)
+    space = curr_player.move(roll, board_size)
     print(f"{curr_player.name} landed on {board[space]['name']}")
 
     if curr_player == Player1:
