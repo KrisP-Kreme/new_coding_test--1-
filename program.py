@@ -25,7 +25,11 @@ curr_index = 0
 for roll in rolls_1:
     curr_player = players[curr_index]
     space = curr_player.move(roll, board_size)
-    print(f"{curr_player.name} landed on {board[space]['name']}")
+
+    if board[space]['name'] == "GO":
+        curr_player.balance += 1
+
+    print(f"{curr_player.name} rolled {roll} and landed on {board[space]['name']} and has a balance of {curr_player.balance}")
 
     curr_index = (curr_index + 1) % len(players)
 
