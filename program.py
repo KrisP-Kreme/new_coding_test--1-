@@ -17,20 +17,17 @@ Player2 = Player("Billy", starting_balance, starting_position)
 Player3 = Player("Charlotte", starting_balance, starting_position)
 Player4 = Player("Sweedal", starting_balance, starting_position)
 
-curr_player = Player1
+players = [Player1, Player2, Player3, Player4]
+
+
+curr_index = 0
 
 for roll in rolls_1:
+    curr_player = players[curr_index]
     space = curr_player.move(roll, board_size)
     print(f"{curr_player.name} landed on {board[space]['name']}")
 
-    if curr_player == Player1:
-        curr_player = Player2
-    elif curr_player == Player2:
-        curr_player = Player3
-    elif curr_player == Player3:
-        curr_player = Player4
-    elif curr_player == Player4:
-        curr_player = Player1
+    curr_index = (curr_index + 1) % len(players)
 
 # space = Player1.move(rolls_1[0], 9)
 # print(board[space]['name'])
