@@ -60,8 +60,8 @@ def handle_land_on_property(player, space):
             owner.balance += rent
             print(f"{player.name} landed on {board[space].name}, paid {rent} rent to {board[space].owner.name} and has a balance of {player.balance}")
         # player lands on their own property and does nothing
-        elif board[space].owner == curr_player:
-            print(f"{curr_player.name} landed on their own property {board[space].name} and has a balance of {curr_player.balance}")
+        elif board[space].owner == player:
+            print(f"{player.name} landed on their own property {board[space].name} and has a balance of {player.balance}")
 
 # handle end game when a player goes bankrupt
 def handle_end_game(bankrupt_player):
