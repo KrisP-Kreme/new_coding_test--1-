@@ -5,7 +5,9 @@ class Player:
         self.curr_space = 0
 
     def move(self, steps, board_size):
-        old_position = self.curr_space
+        if self.curr_space + steps >= board_size:
+            print(f"{self.name} passed GO and collects 1")
+            self.balance += 1
+            
         self.curr_space = (self.curr_space + steps) % board_size
-
         return self.curr_space

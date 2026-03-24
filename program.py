@@ -46,18 +46,15 @@ for roll in rolls_1:
 
     # print(f"{curr_player.name} rolled {roll} and landed on {board[space].name} and has a balance of {curr_player.balance}")
 
-    if board[space].name == "GO":
-        curr_player.balance += 1
-
     if board[space].type == "property":
         if board[space].owner is None:
             # player lands on unowned property and must buy it
             curr_player.balance -= board[space].price
-            board[space].owner = curr_player.name
+            board[space].owner = curr_player
             print(f"{curr_player.name} bought {board[space].name} for {board[space].price} and has a balance of {curr_player.balance}")
         else:
             # player lands on owned property and must pay rent to owner
-            if board[space].owner != curr_player.name:
+            if board[space].owner != curr_player:
                 # rent is doubled if all properties of the same colour are owned by the same player
                 if all(s.owner == board[space].owner for s in colour_groups[board[space].colour]):
                     rent = board[space].price * 2
@@ -65,21 +62,28 @@ for roll in rolls_1:
                     rent = board[space].price
                 curr_player.balance -= rent
                 for player in players:
-                    if player.name == board[space].owner:
+                    if player == board[space].owner:
                         player.balance += rent
-                print(f"{curr_player.name} paid {rent} rent to {board[space].owner} and has a balance of {curr_player.balance}")
+                print(f"{curr_player.name} paid {rent} rent to {board[space].owner.name} and has a balance of {curr_player.balance}")
             # player lands on their own property and does nothing
-            elif board[space].owner == curr_player.name:
+            elif board[space].owner == curr_player:
                 print(f"{curr_player.name} landed on their own property {board[space].name} and has a balance of {curr_player.balance}")
-                
 
+    # check if player has gone bankrupt and end game if so
+    if curr_player.balance < 0:
+        max_balance = players[0].balance
+        winner = players[0]
+        for player in players:
+            if player.balance > max_balance:
+                max_balance = player.balance
+                winner = player
+        print(f"{curr_player.name} has gone bankrupt. {winner.name} wins.")
+        print("Final Balances: ")
+        for player in players: 
+            if player.balance < 0:
+                print(f"{player.name} is bankrupt.")           
+            else:
+                print(f"{player.name} has a balance of {player.balance}.")
+        exit()
+    
     curr_index = (curr_index + 1) % len(players)
-
-# space = Player1.move(rolls_1[0], 9)
-# print(board[space]['name'])
-
-# space = Player1.move(rolls_1[1], 9)
-# print(board[space]['name'])
-
-
-# print(json.dumps(board, indent=4))
