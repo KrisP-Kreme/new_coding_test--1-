@@ -17,7 +17,7 @@ with open('board.json', 'r') as file:
         for space in json.load(file)
     ]
 
-with open('rolls_1.json', 'r') as file:
+with open("rolls_1.json", 'r') as file:
     rolls_1 = json.load(file)
 
 with open('rolls_2.json', 'r') as file:
@@ -80,11 +80,10 @@ def handle_end_game(bankrupt_player):
             print(f"{player.name} has a balance of {player.balance} and finished on {board[player.curr_space].name}.")
     exit()
 
-
-# loop for simulating game
-if __name__ == "__main__":
+# handle running of simulation
+def run_simulation(rolls):
     curr_index = 0
-    for roll in rolls_1:
+    for roll in rolls:
         curr_player = players[curr_index]
         space = curr_player.move(roll, board_size)
 
@@ -97,3 +96,13 @@ if __name__ == "__main__":
             handle_end_game(curr_player)
         
         curr_index = (curr_index + 1) % len(players)
+
+# loop for simulating game
+if __name__ == "__main__":
+   roll_set_input = input("Enter 1 to run simulation with rolls_1 or 2 to run simulation with rolls_2: ")
+   if roll_set_input == "1":
+       run_simulation(rolls_1)
+   elif roll_set_input == "2":
+       run_simulation(rolls_2)
+   else:
+       print("Invalid input. Please enter 1 or 2.")
