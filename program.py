@@ -41,7 +41,7 @@ Player4 = Player("Sweedal", starting_balance, starting_position)
 players = [Player1, Player2, Player3, Player4]
 
 # handle landing on property spaces
-def handle_land_on_property(player, space):
+def handle_land_on_property(player, space, board, colour_groups):
     if board[space].owner is None:
         # player lands on unowned property and must buy it
         player.balance -= board[space].price
@@ -81,18 +81,19 @@ def handle_end_game(bankrupt_player):
     exit()
 
 
-# loop for simulating game 
-curr_index = 0
-for roll in rolls_1:
-    curr_player = players[curr_index]
-    space = curr_player.move(roll, board_size)
+# loop for simulating game
+if __name__ == "__main__":
+    curr_index = 0
+    for roll in rolls_1:
+        curr_player = players[curr_index]
+        space = curr_player.move(roll, board_size)
 
-    # check if a player has landed on a property space and handle accordingly
-    if board[space].type == "property":
-        handle_land_on_property(curr_player, space)
+        # check if a player has landed on a property space and handle accordingly
+        if board[space].type == "property":
+            handle_land_on_property(curr_player, space, board, colour_groups)
 
-    # check if player has gone bankrupt and end game if so
-    if curr_player.balance < 0:
-        handle_end_game(curr_player)
-    
-    curr_index = (curr_index + 1) % len(players)
+        # check if player has gone bankrupt and end game if so
+        if curr_player.balance < 0:
+            handle_end_game(curr_player)
+        
+        curr_index = (curr_index + 1) % len(players)
