@@ -42,20 +42,21 @@ for roll in rolls_1:
 
     if board[space].type == "property":
         if board[space].owner is None:
-            if curr_player.balance >= board[space].price:
-                curr_player.balance -= board[space].price
-                board[space].owner = curr_player.name
-                print(f"{curr_player.name} bought {board[space].name} for {board[space].price} and has a balance of {curr_player.balance}")
-            elif board[space].owner != curr_player.name:
+            # player lands on unowned property and must buy it
+            curr_player.balance -= board[space].price
+            board[space].owner = curr_player.name
+            print(f"{curr_player.name} bought {board[space].name} for {board[space].price} and has a balance of {curr_player.balance}")
+        else:
+            # player lands on owned property and must pay rent to owner
+            if board[space].owner != curr_player.name:
                 curr_player.balance -= board[space].rent
                 for player in players:
                     if player.name == board[space].owner:
                         player.balance += board[space].rent
                 print(f"{curr_player.name} paid {board[space].rent} rent to {board[space].owner} and has a balance of {curr_player.balance}")
+            # player lands on their own property and does nothing
             elif board[space].owner == curr_player.name:
                 print(f"{curr_player.name} landed on their own property {board[space].name} and has a balance of {curr_player.balance}")
-            else:
-                print(f"{curr_player.name} cannot afford {board[space].name} and has a balance of {curr_player.balance}")
                 
 
     curr_index = (curr_index + 1) % len(players)
