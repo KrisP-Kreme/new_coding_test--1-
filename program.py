@@ -62,7 +62,7 @@ for roll in rolls_1:
                     rent = board[space].price
                 curr_player.balance -= rent
                 for player in players:
-                    if player == board[space].owner:
+                    if player == board[space].owner and curr_player.balance >= 0:
                         player.balance += rent
                 print(f"{curr_player.name} paid {rent} rent to {board[space].owner.name} and has a balance of {curr_player.balance}")
             # player lands on their own property and does nothing
@@ -77,13 +77,13 @@ for roll in rolls_1:
             if player.balance > max_balance:
                 max_balance = player.balance
                 winner = player
+        print("Final Outcome: ")
         print(f"{curr_player.name} has gone bankrupt. {winner.name} wins.")
-        print("Final Balances: ")
         for player in players: 
             if player.balance < 0:
-                print(f"{player.name} is bankrupt.")           
+                print(f"{player.name} is bankrupt and finished on {board[player.curr_space].name}.")           
             else:
-                print(f"{player.name} has a balance of {player.balance}.")
+                print(f"{player.name} has a balance of {player.balance} and finished on {board[player.curr_space].name}.")
         exit()
     
     curr_index = (curr_index + 1) % len(players)
