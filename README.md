@@ -1,6 +1,6 @@
 # My Submission
 
-## Submission Outline and How to run
+## Submission Outline and How to Run
 
 My submission consists of four different files. Two of the files are class files, player.py and space.py. The third file is program.py where the main program lives. The final file is tests.py, where I've written my test cases. 
 
@@ -17,7 +17,7 @@ I started this project by implementing object-oriented programming (OOP) princip
 
 In the main program file, I initially had all my code in one overall simulation loop, just to have the basic logic figured out and written. After ensuring that the main logic was working, I decided to split up all the key behaviours, such as handling property interactions and end game conditions, into separate functions for better readabililty. This also allowed me to keep the main part of the program clean and uncomplicated.
 
-While writing the program, I identifed that a lot of the logic I had written used global variables defined at the start of the program. This meant that my code broke encapsulation and was much harder to test. I fixed this by rewriting the functions I created to use passed parameter within their logic, rather than the global variables. This then allowed me to test the code much more easily as I could pass data from the tests straight into the functions. 
+While writing the program, I identifed that a lot of the logic I had written used global variables defined at the start of the program. This meant that my code broke encapsulation and was much harder to test. I fixed this by rewriting the functions I created to use passed parameters within their logic, rather than the global variables. This then allowed me to test the code much more easily as I could pass data from the tests straight into the functions. 
 
 ## Extensibility
 
