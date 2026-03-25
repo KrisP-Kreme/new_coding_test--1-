@@ -30,15 +30,21 @@ def test_buy_property():
 
 def test_pay_rent():
     print("Testing paying rent...")
-    p = Player("Test", 10, 0)
-    space = Space("TestSpace", 3, "Red", "property")
-    board = [space]
-    colour_groups = {"Red": [space]}
+    owner = Player("Test", 10, 0)
+    tenant = Player("Test", 10, 0)
+    
+    space1 = Space("TestSpace1", 3, "Red", "property")
+    space2 = Space("TestSpace2", 3, "Red", "property")
+    space1.owner = owner
 
-    handle_land_on_property(p, 0, board, colour_groups)
+    board = [space1, space2]
+    colour_groups = {"Red": [space1, space2]}
 
-    assert p.balance == 7
-    assert board[0].owner == p
+    handle_land_on_property(tenant, 0, board, colour_groups)
+
+    assert tenant.balance == 7
+    assert owner.balance == 13
+    assert board[0].owner == owner
 
 def test_pay_double_rent():
     print("Testing paying double rent...")
